@@ -179,8 +179,11 @@ export const InteractiveScanningScreen: React.FC = () => {
           animate={{ opacity: 1 }}
           className="mb-12"
         >
-          <h1 className="text-xl font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-3">
-            ANALYZING
+          <h1 
+            className="text-3xl text-red-500 mb-4 drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+            style={{ fontFamily: "'Dark Horse', serif" }}
+          >
+            Analyzing
           </h1>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>

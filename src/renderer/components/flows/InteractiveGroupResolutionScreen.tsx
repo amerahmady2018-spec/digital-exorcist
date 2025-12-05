@@ -261,8 +261,11 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
           animate={{ opacity: 1 }}
           className="text-center mb-4"
         >
-          <h1 className="text-lg font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-1">
-            GROUP RESOLUTION
+          <h1 
+            className="text-3xl text-red-500 mb-2 drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+            style={{ fontFamily: "'Dark Horse', serif" }}
+          >
+            Group Resolution
           </h1>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>
