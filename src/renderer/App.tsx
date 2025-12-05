@@ -240,46 +240,63 @@ function App() {
     triggerPreset('victory');
     const entityId = storyBattleEntityId;
     console.log('[StoryBattle] Victory - entityId:', entityId);
-    if (entityId && storyModeRef.current) {
-      storyModeRef.current.handleBattleResult('banished', entityId);
-    }
+    
+    // Clear battle state first
     setStoryBattleEntity(null);
     setStoryBattleEntityId(null);
+    
+    // Transition back to story mode immediately
+    transition(AppState.STORY_MODE);
+    
+    // Then record the battle result (after transition so StoryMode is visible)
     setTimeout(() => {
-      const success = transition(AppState.STORY_MODE);
-      console.log('[StoryBattle] Victory transition success:', success);
-    }, 50);
+      if (entityId && storyModeRef.current) {
+        console.log('[StoryBattle] Recording victory result for:', entityId);
+        storyModeRef.current.handleBattleResult('banished', entityId);
+      }
+    }, 100);
   }, [transition, triggerPreset, storyBattleEntityId]);
 
   // Story battle defeat - record result and continue
   const handleStoryDefeat = useCallback(() => {
     const entityId = storyBattleEntityId;
     console.log('[StoryBattle] Defeat - entityId:', entityId);
-    if (entityId && storyModeRef.current) {
-      storyModeRef.current.handleBattleResult('survived', entityId);
-    }
+    
+    // Clear battle state first
     setStoryBattleEntity(null);
     setStoryBattleEntityId(null);
+    
+    // Transition back to story mode immediately
+    transition(AppState.STORY_MODE);
+    
+    // Then record the battle result
     setTimeout(() => {
-      const success = transition(AppState.STORY_MODE);
-      console.log('[StoryBattle] Defeat transition success:', success);
-    }, 50);
+      if (entityId && storyModeRef.current) {
+        console.log('[StoryBattle] Recording defeat result for:', entityId);
+        storyModeRef.current.handleBattleResult('survived', entityId);
+      }
+    }, 100);
   }, [transition, storyBattleEntityId]);
 
   // Story battle flee - treat as skip, go back to overview
   const handleStoryFlee = useCallback(() => {
     const entityId = storyBattleEntityId;
     console.log('[StoryBattle] Flee - entityId:', entityId);
-    if (entityId && storyModeRef.current) {
-      storyModeRef.current.handleBattleResult('skipped', entityId);
-    }
+    
+    // Clear battle state first
     setStoryBattleEntity(null);
     setStoryBattleEntityId(null);
-    // Transition back to story mode - use setTimeout to ensure state is cleared first
+    
+    // Transition back to story mode immediately
+    transition(AppState.STORY_MODE);
+    
+    // Then record the battle result
     setTimeout(() => {
-      const success = transition(AppState.STORY_MODE);
-      console.log('[StoryBattle] Flee transition success:', success);
-    }, 50);
+      if (entityId && storyModeRef.current) {
+        console.log('[StoryBattle] Recording flee result for:', entityId);
+        storyModeRef.current.handleBattleResult('skipped', entityId);
+      }
+    }, 100);
   }, [transition, storyBattleEntityId]);
 
   // Handle undo from the undo toast (Requirements: 13.3)
