@@ -254,25 +254,25 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
     <div className="h-screen w-screen overflow-hidden flex flex-col bg-black relative">
       <BackgroundEffects />
 
-      <div className="relative z-10 flex-1 flex flex-col max-w-4xl mx-auto w-full px-6 py-8">
-        {/* Header */}
+      <div className="relative z-10 flex-1 flex flex-col max-w-5xl mx-auto w-full px-6 pt-6 pb-4">
+        {/* Header - compact */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center mb-8"
+          className="text-center mb-4"
         >
-          <h1 className="text-xl font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-2">
+          <h1 className="text-lg font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-1">
             GROUP RESOLUTION
           </h1>
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>
 
-        {/* Monster cards as main characters - 3 columns */}
+        {/* Monster cards as main characters - 3 columns, fill available space */}
         {!allResolved && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 grid grid-cols-3 gap-4"
+            className="flex-1 grid grid-cols-3 gap-4 min-h-0"
           >
             {(['demon', 'zombie', 'ghost'] as EntityGroup[]).map((group) => {
               const colors = getGroupColor(group);
@@ -286,44 +286,44 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                 <motion.div 
                   key={group}
                   whileHover={!isResolved && !isEmpty ? { scale: 1.02 } : {}}
-                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-4
+                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-5 h-full
                               ${isResolved ? 'opacity-50' : ''} ${isEmpty ? 'opacity-30' : ''}`}
                 >
-                  {/* Monster Image - Large */}
-                  <div className="relative w-full h-40 flex items-center justify-center mb-4">
+                  {/* Monster Image - Large, fills available space */}
+                  <div className="relative w-full flex-1 flex items-center justify-center min-h-[180px]">
                     <motion.img 
                       src={colors.img} 
                       alt={group} 
-                      className="h-32 w-auto object-contain"
-                      animate={!isResolved && !isEmpty ? { y: [0, -8, 0] } : {}}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                      className="max-h-[200px] w-auto object-contain"
+                      animate={!isResolved && !isEmpty ? { y: [0, -10, 0] } : {}}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                       style={{
-                        filter: `drop-shadow(0 0 20px ${group === 'demon' ? 'rgba(239,68,68,0.5)' : group === 'zombie' ? 'rgba(34,197,94,0.5)' : 'rgba(59,130,246,0.5)'})`
+                        filter: `drop-shadow(0 0 30px ${group === 'demon' ? 'rgba(239,68,68,0.6)' : group === 'zombie' ? 'rgba(34,197,94,0.6)' : 'rgba(59,130,246,0.6)'})`
                       }}
                     />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`${colors.text} font-tech text-lg tracking-[0.2em] uppercase mb-2`}>
+                  <h3 className={`${colors.text} font-tech text-xl tracking-[0.25em] uppercase mt-4 mb-3`}>
                     {getGroupLabel(group)}
                   </h3>
 
                   {/* Stats */}
-                  <div className="flex items-center gap-4 mb-2">
+                  <div className="flex items-center gap-6 mb-3">
                     <div className="text-center">
-                      <p className="text-gray-300 font-tech text-2xl">{files.length}</p>
-                      <p className="text-gray-600 font-tech text-[10px]">files</p>
+                      <p className="text-gray-300 font-tech text-3xl">{files.length}</p>
+                      <p className="text-gray-600 font-tech text-xs">files</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-400 font-tech text-lg">{formatFileSize(groupSize)}</p>
-                      <p className="text-gray-600 font-tech text-[10px]">size</p>
+                      <p className="text-gray-400 font-tech text-xl">{formatFileSize(groupSize)}</p>
+                      <p className="text-gray-600 font-tech text-xs">size</p>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 font-tech text-[10px] mb-4 text-center">{getGroupDescription(group)}</p>
+                  <p className="text-gray-600 font-tech text-xs mb-4 text-center">{getGroupDescription(group)}</p>
 
                   {/* Actions */}
-                  <div className="w-full mt-auto">
+                  <div className="w-full">
                     {isResolved ? (
                       <div className={`text-center py-2 font-tech text-sm tracking-wider ${
                         state.choice === 'purge' || (state.choice === 'battle' && state.battleResult === 'win') 
@@ -439,11 +439,11 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Keyboard hint */}
-        <div className="mt-auto pt-6 flex justify-center">
+        {/* Keyboard hint - compact */}
+        <div className="pt-3 flex justify-center">
           <span className="flex items-center gap-1.5 text-gray-500 font-tech text-[10px] tracking-wider">
-            <span className="border border-gray-700 px-2 py-1 rounded text-xs text-gray-400">ESC</span>
-            <span className="ml-1">cancel</span>
+            <span className="border border-gray-700 px-2 py-0.5 rounded text-[10px] text-gray-400">ESC</span>
+            <span>cancel</span>
           </span>
         </div>
       </div>
