@@ -52,7 +52,10 @@ A supernatural-themed file management application that transforms the mundane ta
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/digital-exorcist.git
+git clone https://github.com/amerahmady2018-spec/digital-exorcist.git
+cd digital-exorcist
+npm install
+
 cd digital-exorcist
 
 # Install dependencies
@@ -83,9 +86,11 @@ npm run build
 
 ## 🌐 Live Demo
 
-Try the web demo: [digital-exorcist.vercel.app](https://digital-exorcist.vercel.app)
+https://digital-exorcist-webdemo.vercel.app
 
-> Note: The web demo uses simulated data. Download the desktop app for real file management.
+> Note: This web demo uses simulated data only.  
+> The full Electron desktop version enables real file operations.
+
 
 ## 📁 Project Structure
 
