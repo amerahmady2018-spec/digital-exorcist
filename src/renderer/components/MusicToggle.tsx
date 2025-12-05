@@ -146,6 +146,11 @@ export const MusicToggle: React.FC<MusicToggleProps> = ({ theme = 'purple' }) =>
     };
   }, []);
 
+  // Reset storyModeTheme when the theme prop changes (screen transition)
+  useEffect(() => {
+    setStoryModeTheme(null);
+  }, [theme]);
+
   const toggleMusic = () => {
     if (!audioRef.current) return;
 
