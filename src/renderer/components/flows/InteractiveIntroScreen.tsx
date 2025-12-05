@@ -107,17 +107,24 @@ export const InteractiveIntroScreen: React.FC = () => {
           className="grid grid-cols-3 gap-4 mb-12"
         >
           <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
-            <div className="text-2xl mb-2">📁</div>
+            <div className="w-6 h-6 mx-auto mb-2 border border-red-500/40 rounded flex items-center justify-center">
+              <div className="w-2 h-2 bg-red-500/60" />
+            </div>
             <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Scan</p>
             <p className="text-gray-500 text-[11px]">Real files from your system</p>
           </div>
           <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
-            <div className="text-2xl mb-2">⚔️</div>
+            <div className="w-6 h-6 mx-auto mb-2 flex items-center justify-center">
+              <div className="w-4 h-[2px] bg-red-500/60 rotate-45 absolute" />
+              <div className="w-4 h-[2px] bg-red-500/60 -rotate-45 absolute" />
+            </div>
             <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Battle</p>
             <p className="text-gray-500 text-[11px]">Symbolic confrontations</p>
           </div>
           <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
-            <div className="text-2xl mb-2">🛡️</div>
+            <div className="w-6 h-6 mx-auto mb-2 border-2 border-red-500/40 rounded-full flex items-center justify-center">
+              <div className="w-2 h-2 bg-red-500/60 rounded-full" />
+            </div>
             <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Safe</p>
             <p className="text-gray-500 text-[11px]">Files moved, never deleted</p>
           </div>

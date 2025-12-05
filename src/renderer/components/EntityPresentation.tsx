@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import type { StoryEntity, ThreatLevel } from '../data/storyEntities';
 import type { MonsterType } from '../../shared/types';
+import { playExorcismSound, playHoverSound } from '../utils/soundEffects';
 
 // Import monster images
 import ghostImage from '../../assets/images/ghost.png';
@@ -704,8 +705,14 @@ const EntityPresentation: React.FC<EntityPresentationProps> = ({
           {/* INITIATE EXORCISM button */}
           <motion.button
             data-testid="fight-button"
-            onClick={onFight}
-            onMouseEnter={() => setIsButtonHovered(true)}
+            onClick={() => {
+              playExorcismSound();
+              onFight();
+            }}
+            onMouseEnter={() => {
+              setIsButtonHovered(true);
+              playHoverSound();
+            }}
             onMouseLeave={() => setIsButtonHovered(false)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

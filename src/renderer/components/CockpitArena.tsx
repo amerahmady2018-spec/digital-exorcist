@@ -5,6 +5,7 @@ import { MonsterType } from '../../shared/types';
 import { DamageNumber } from './DamageNumber';
 import { useKeyboardControls, KeyBinding } from '../hooks/useKeyboardControls';
 import { AppState, useAppStore } from '../store/appStore';
+import { playAttackSound, playVictorySound, playDefeatSound, playClickSound } from '../utils/soundEffects';
 
 import iconFirewall from '../../assets/images/icon_firewall.png';
 import iconTactical from '../../assets/images/icon_tactical.png';
@@ -182,6 +183,7 @@ const CockpitArena = forwardRef<HTMLDivElement, CockpitArenaProps>(
     useEffect(() => {
       if (state.phase === 'Victory' && !victoryFiredRef.current) {
         victoryFiredRef.current = true;
+        playVictorySound();
         console.log('[CockpitArena] Victory detected, firing onVictory in 1200ms');
         const timer = setTimeout(() => {
           console.log('[CockpitArena] Calling onVictory NOW');
@@ -190,6 +192,15 @@ const CockpitArena = forwardRef<HTMLDivElement, CockpitArenaProps>(
         return () => clearTimeout(timer);
       }
     }, [state.phase, monster.path, monster.classifications, monster.size]);
+
+    // DEFEAT - Play sound when player loses
+    const defeatSoundPlayedRef = useRef(false);
+    useEffect(() => {
+      if (state.phase === 'Defeat' && !defeatSoundPlayedRef.current) {
+        defeatSoundPlayedRef.current = true;
+        playDefeatSound();
+      }
+    }, [state.phase]);
 
     // DEFEAT - User must click button to continue (no auto-fire)
 
@@ -216,6 +227,7 @@ const CockpitArena = forwardRef<HTMLDivElement, CockpitArenaProps>(
     const handleSeal = useCallback(() => {
       if (state.phase !== 'PlayerTurn' || isActing || state.sealActive) return;
       setIsActing(true);
+      playClickSound();
       dispatch({ type: 'ACTIVATE_SEAL' });
       setTimeout(() => {
         dispatch({ type: 'SET_PHASE', phase: 'EnemyTurn' });
@@ -226,6 +238,7 @@ const CockpitArena = forwardRef<HTMLDivElement, CockpitArenaProps>(
     const handleBreak = useCallback(() => {
       if (state.phase !== 'PlayerTurn' || isActing) return;
       setIsActing(true);
+      playAttackSound();
       const dmg = baseDamage;
       dispatch({ type: 'DAMAGE_MONSTER', amount: dmg });
       addDamage('monster', dmg);
@@ -241,6 +254,7 @@ const CockpitArena = forwardRef<HTMLDivElement, CockpitArenaProps>(
     const handleSever = useCallback(() => {
       if (state.phase !== 'PlayerTurn' || isActing || state.playerEssence < 30) return;
       setIsActing(true);
+      playAttackSound();
       dispatch({ type: 'USE_ESSENCE', amount: 30 });
       const dmg = severDamage;
       dispatch({ type: 'DAMAGE_MONSTER', amount: dmg });

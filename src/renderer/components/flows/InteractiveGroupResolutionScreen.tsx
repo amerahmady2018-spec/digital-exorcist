@@ -267,12 +267,12 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
           <div className="w-16 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>
 
-        {/* All 3 group cards displayed as rows */}
+        {/* Monster cards as main characters - 3 columns */}
         {!allResolved && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 flex flex-col gap-3 overflow-y-auto"
+            className="flex-1 grid grid-cols-3 gap-4"
           >
             {(['demon', 'zombie', 'ghost'] as EntityGroup[]).map((group) => {
               const colors = getGroupColor(group);
@@ -283,90 +283,105 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
               const isEmpty = files.length === 0;
 
               return (
-                <div 
+                <motion.div 
                   key={group}
-                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm p-4 rounded-lg flex items-center gap-4
+                  whileHover={!isResolved && !isEmpty ? { scale: 1.02 } : {}}
+                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-4
                               ${isResolved ? 'opacity-50' : ''} ${isEmpty ? 'opacity-30' : ''}`}
                 >
-                  {/* Left: Icon + Label */}
-                  <div className="flex items-center gap-3 min-w-[140px]">
-                    <img src={colors.img} alt={group} className="w-8 h-8 object-contain flex-shrink-0" />
-                    <span className={`${colors.text} font-tech text-sm tracking-[0.15em] uppercase`}>
-                      {getGroupLabel(group)}
-                    </span>
+                  {/* Monster Image - Large */}
+                  <div className="relative w-full h-40 flex items-center justify-center mb-4">
+                    <motion.img 
+                      src={colors.img} 
+                      alt={group} 
+                      className="h-32 w-auto object-contain"
+                      animate={!isResolved && !isEmpty ? { y: [0, -8, 0] } : {}}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                      style={{
+                        filter: `drop-shadow(0 0 20px ${group === 'demon' ? 'rgba(239,68,68,0.5)' : group === 'zombie' ? 'rgba(34,197,94,0.5)' : 'rgba(59,130,246,0.5)'})`
+                      }}
+                    />
                   </div>
 
-                  {/* Center: Stats */}
-                  <div className="flex items-center gap-6 flex-1">
+                  {/* Label */}
+                  <h3 className={`${colors.text} font-tech text-lg tracking-[0.2em] uppercase mb-2`}>
+                    {getGroupLabel(group)}
+                  </h3>
+
+                  {/* Stats */}
+                  <div className="flex items-center gap-4 mb-2">
                     <div className="text-center">
-                      <p className="text-gray-300 font-tech text-xl">{files.length}</p>
+                      <p className="text-gray-300 font-tech text-2xl">{files.length}</p>
                       <p className="text-gray-600 font-tech text-[10px]">files</p>
                     </div>
                     <div className="text-center">
                       <p className="text-gray-400 font-tech text-lg">{formatFileSize(groupSize)}</p>
                       <p className="text-gray-600 font-tech text-[10px]">size</p>
                     </div>
-                    <p className="text-gray-600 font-tech text-xs hidden md:block">{getGroupDescription(group)}</p>
                   </div>
 
-                  {/* Right: Actions */}
-                  <div className="flex items-center gap-2">
+                  <p className="text-gray-600 font-tech text-[10px] mb-4 text-center">{getGroupDescription(group)}</p>
+
+                  {/* Actions */}
+                  <div className="w-full mt-auto">
                     {isResolved ? (
-                      <div className={`px-4 py-2 font-tech text-xs tracking-wider ${
+                      <div className={`text-center py-2 font-tech text-sm tracking-wider ${
                         state.choice === 'purge' || (state.choice === 'battle' && state.battleResult === 'win') 
                           ? 'text-red-400' : 'text-gray-500'
                       }`}>
-                        {state.choice === 'purge' && '✓ PURGE'}
-                        {state.choice === 'ignore' && '— IGNORED'}
-                        {state.choice === 'battle' && state.battleResult === 'win' && '⚔ WON'}
-                        {state.choice === 'battle' && state.battleResult === 'loss' && '✗ LOST'}
+                        {state.choice === 'purge' && 'PURGED'}
+                        {state.choice === 'ignore' && 'IGNORED'}
+                        {state.choice === 'battle' && state.battleResult === 'win' && 'BATTLE WON'}
+                        {state.choice === 'battle' && state.battleResult === 'loss' && 'BATTLE LOST'}
                       </div>
                     ) : isEmpty ? (
-                      <div className="px-4 py-2 text-gray-600 font-tech text-xs">
-                        No files
+                      <div className="text-center py-2 text-gray-600 font-tech text-xs">
+                        No files detected
                       </div>
                     ) : (
-                      <>
+                      <div className="flex flex-col gap-2">
                         <motion.button
                           onClick={() => {
                             setGroupStates(prev => ({ ...prev, [group]: { choice: 'purge' } }));
                           }}
-                          whileHover={{ backgroundColor: 'rgba(239,68,68,0.15)' }}
+                          whileHover={{ backgroundColor: 'rgba(239,68,68,0.2)' }}
                           whileTap={{ scale: 0.98 }}
-                          className="px-4 py-2 border border-red-500/40 text-red-400 font-tech text-[10px] tracking-[0.1em] uppercase
+                          className="w-full py-2 border border-red-500/40 text-red-400 font-tech text-xs tracking-[0.15em] uppercase
                                      hover:border-red-400 transition-all rounded"
                         >
-                          PURGE
+                          PURGE ALL
                         </motion.button>
 
-                        <motion.button
-                          onClick={() => {
-                            setGroupStates(prev => ({ ...prev, [group]: { choice: 'ignore' } }));
-                          }}
-                          whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
-                          whileTap={{ scale: 0.98 }}
-                          className="px-4 py-2 border border-gray-700 text-gray-500 font-tech text-[10px] tracking-[0.1em] uppercase
-                                     hover:border-gray-600 transition-all rounded"
-                        >
-                          IGNORE
-                        </motion.button>
+                        <div className="flex gap-2">
+                          <motion.button
+                            onClick={() => {
+                              setGroupStates(prev => ({ ...prev, [group]: { choice: 'ignore' } }));
+                            }}
+                            whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
+                            whileTap={{ scale: 0.98 }}
+                            className="flex-1 py-2 border border-gray-700 text-gray-500 font-tech text-[10px] tracking-[0.1em] uppercase
+                                       hover:border-gray-600 transition-all rounded"
+                          >
+                            IGNORE
+                          </motion.button>
 
-                        <motion.button
-                          onClick={() => {
-                            sessionStorage.setItem('interactiveBattleGroup', group);
-                            transition(AppState.INTERACTIVE_GROUP_BATTLE);
-                          }}
-                          whileHover={{ backgroundColor: 'rgba(147,51,234,0.15)' }}
-                          whileTap={{ scale: 0.98 }}
-                          className="px-4 py-2 border border-purple-500/40 text-purple-400 font-tech text-[10px] tracking-[0.1em] uppercase
-                                     hover:border-purple-400 transition-all rounded"
-                        >
-                          BATTLE
-                        </motion.button>
-                      </>
+                          <motion.button
+                            onClick={() => {
+                              sessionStorage.setItem('interactiveBattleGroup', group);
+                              transition(AppState.INTERACTIVE_GROUP_BATTLE);
+                            }}
+                            whileHover={{ backgroundColor: 'rgba(147,51,234,0.2)' }}
+                            whileTap={{ scale: 0.98 }}
+                            className="flex-1 py-2 border border-purple-500/40 text-purple-400 font-tech text-[10px] tracking-[0.1em] uppercase
+                                       hover:border-purple-400 transition-all rounded"
+                          >
+                            BATTLE
+                          </motion.button>
+                        </div>
+                      </div>
                     )}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </motion.div>

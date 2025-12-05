@@ -55,11 +55,11 @@ export const STORY_ENTITIES: StoryEntity[] = [
     name: 'The Forgotten Log',
     type: 'ghost',
     image: ghostImg,
-    hp: 50,
+    hp: 75,
     threatLevel: 'Low',
     lore: 'An ancient log file from 2019, abandoned and forgotten in the depths of your system. It whispers of errors long past, clinging to existence despite serving no purpose. Its spectral presence drains your storage slowly, a reminder of debugging sessions that have faded from memory.',
     fakeFilePath: 'C:/System/Logs/old_error_2019.log',
-    fakeFileSize: 4 * 1024, // 4KB - small ghost file
+    fakeFileSize: 2.5 * 1024 * 1024, // 2.5MB - bigger so it survives a few hits
   },
   // Level 2 - Zombie (medium)
   {
