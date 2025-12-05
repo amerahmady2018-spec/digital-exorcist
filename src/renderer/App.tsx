@@ -458,15 +458,34 @@ function App() {
       {/* XP Floating Text - Shows +XP on banish */}
       <XPFloatingText />
       
-      {/* Music Toggle - Global background music control, color changes per screen */}
+      {/* Music Toggle - Global background music control
+          - Green: title screens, scanning, mission select, story mode
+          - Red: battles + all interactive mode screens
+          - Purple: default/HQ screens
+          - Entity colors handled via story-mode-theme event from detail screens */}
       <MusicToggle 
         theme={
-          state === AppState.INTRO ? 'purple' :
-          state === AppState.EXORCISM_STYLE ? 'purple' :
+          // All Interactive Mode = red
+          state === AppState.INTERACTIVE_INTRO ? 'red' :
+          state === AppState.INTERACTIVE_TARGET ? 'red' :
+          state === AppState.INTERACTIVE_SCANNING ? 'red' :
+          state === AppState.INTERACTIVE_GROUP_RESOLUTION ? 'red' :
+          state === AppState.INTERACTIVE_GROUP_BATTLE ? 'red' :
+          state === AppState.INTERACTIVE_SINGLE_FILE ? 'red' :
+          state === AppState.INTERACTIVE_SINGLE_BATTLE ? 'red' :
+          state === AppState.INTERACTIVE_EXECUTING ? 'red' :
+          state === AppState.INTERACTIVE_SUMMARY ? 'red' :
+          // Other battles = red
+          state === AppState.BATTLE_ARENA ? 'red' :
+          state === AppState.STORY_BATTLE ? 'red' :
+          // Green title/scanning states
+          state === AppState.INTRO ? 'green' :
           state === AppState.MISSION_SELECT ? 'green' :
           state === AppState.STORY_MODE ? 'green' :
-          state === AppState.STORY_BATTLE ? 'red' :
-          'default'
+          state === AppState.SWIFT_PURGE_PREVIEW ? 'green' :
+          state === AppState.SWIFT_PURGE_EXECUTING ? 'green' :
+          // Default purple for HQ/menu screens
+          'purple'
         }
       />
 

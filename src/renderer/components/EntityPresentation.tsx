@@ -238,10 +238,19 @@ const EntityPresentation: React.FC<EntityPresentationProps> = ({
   const image = monsterImages[entity.type];
   const [isButtonHovered, setIsButtonHovered] = useState(false);
 
-  // Dispatch custom event when button hover state changes (for MusicToggle)
+  // Dispatch custom events when button hover state changes (for MusicToggle)
   useEffect(() => {
     window.dispatchEvent(new CustomEvent('exorcism-button-hover', { detail: { isHovered: isButtonHovered } }));
-  }, [isButtonHovered]);
+    
+    // Also dispatch story-mode-theme to override entity color with red on hover
+    if (isButtonHovered) {
+      window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme: 'red' } }));
+    } else {
+      // Return to entity-specific color
+      const theme = entity.type === 'ghost' ? 'cyan' : entity.type === 'zombie' ? 'green' : 'red';
+      window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme } }));
+    }
+  }, [isButtonHovered, entity.type]);
 
   return (
     <motion.div

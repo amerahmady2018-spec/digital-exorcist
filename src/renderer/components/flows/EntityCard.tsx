@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import type { ClassifiedFile } from '../../../shared/types';
 import { 
@@ -8,6 +8,16 @@ import {
   formatFileSize, 
   formatFileAge 
 } from '../../utils/entityUtils';
+
+/** Map monster type to MusicToggle theme */
+const getThemeForType = (type: string): string => {
+  switch (type) {
+    case 'ghost': return 'cyan';
+    case 'zombie': return 'green';
+    case 'demon': return 'red';
+    default: return 'purple';
+  }
+};
 
 /** Extract filename from a file path */
 function getFileName(filePath: string): string {
@@ -45,6 +55,28 @@ export const EntityCard: React.FC<EntityCardProps> = ({
   const type = getPrimaryType(entity);
   const icon = getEntityIcon(type);
   const flavorText = getEntityFlavorText(type);
+
+  // Dispatch theme event based on monster type when card is shown
+  useEffect(() => {
+    const theme = getThemeForType(type);
+    window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme } }));
+    
+    // Reset to purple when unmounting
+    return () => {
+      window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme: 'purple' } }));
+    };
+  }, [type]);
+
+  // Handle purge button hover - dispatch red theme
+  const handlePurgeHover = (isHovering: boolean) => {
+    if (isHovering) {
+      window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme: 'red' } }));
+    } else {
+      // Return to monster type color
+      const theme = getThemeForType(type);
+      window.dispatchEvent(new CustomEvent('story-mode-theme', { detail: { theme } }));
+    }
+  };
 
   const getTypeColor = () => {
     switch (type) {
@@ -117,6 +149,8 @@ export const EntityCard: React.FC<EntityCardProps> = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onPurge}
+                  onMouseEnter={() => handlePurgeHover(true)}
+                  onMouseLeave={() => handlePurgeHover(false)}
                   className="flex-1 py-2 bg-red-500/20 border border-red-500/50 text-red-400 text-xs font-bold uppercase tracking-wider rounded hover:bg-red-500/30 transition-colors"
                 >
                   Purge
@@ -229,6 +263,8 @@ export const EntityCard: React.FC<EntityCardProps> = ({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onPurge}
+                onMouseEnter={() => handlePurgeHover(true)}
+                onMouseLeave={() => handlePurgeHover(false)}
                 className="flex-1 py-4 bg-red-500/20 border-2 border-red-500/50 text-red-400 font-bold uppercase tracking-widest rounded-lg hover:bg-red-500/30 transition-colors"
               >
                 Purge

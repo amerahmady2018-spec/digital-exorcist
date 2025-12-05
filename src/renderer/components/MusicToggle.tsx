@@ -85,20 +85,20 @@ const themeColors: Record<MusicToggleTheme, {
   },
   default: {
     border: 'border-gray-600',
-    borderActive: 'border-cyan-500',
-    circles: ['border-cyan-500/30', 'border-cyan-500/40', 'border-cyan-500/50'],
+    borderActive: 'border-purple-500',
+    circles: ['border-purple-500/30', 'border-purple-500/40', 'border-purple-500/50'],
     bar: 'bg-gray-600',
-    barActive: 'bg-cyan-400',
+    barActive: 'bg-purple-400',
     dot: 'bg-gray-500',
-    dotActive: 'bg-cyan-400',
-    sweepGradient: 'linear-gradient(90deg, rgba(6,182,212,0.8) 0%, transparent 100%)',
-    sweepShadow: '0 0 10px rgba(6,182,212,0.5)',
-    glowColor: '6,182,212',
-    pulseClass: 'border-cyan-500/50',
+    dotActive: 'bg-purple-400',
+    sweepGradient: 'linear-gradient(90deg, rgba(168,85,247,0.8) 0%, transparent 100%)',
+    sweepShadow: '0 0 10px rgba(168,85,247,0.5)',
+    glowColor: '168,85,247',
+    pulseClass: 'border-purple-500/50',
   },
 };
 
-export const MusicToggle: React.FC<MusicToggleProps> = ({ theme = 'default' }) => {
+export const MusicToggle: React.FC<MusicToggleProps> = ({ theme = 'purple' }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isExorcismHovered, setIsExorcismHovered] = useState(false);

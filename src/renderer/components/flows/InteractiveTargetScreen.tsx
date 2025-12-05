@@ -107,16 +107,19 @@ export const InteractiveTargetScreen: React.FC = () => {
       }} />
 
       <div className="relative z-10 w-full max-w-3xl mx-auto px-6">
-        {/* Header */}
+        {/* Header with Dark Horse font */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-10"
         >
-          <h1 className="text-2xl font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-3">
-            CHOOSE TARGET
+          <h1 
+            className="text-4xl md:text-5xl text-red-500 mb-4 drop-shadow-[0_0_25px_rgba(239,68,68,0.4)]"
+            style={{ fontFamily: "'Dark Horse', serif" }}
+          >
+            Choose Target
           </h1>
-          <div className="w-24 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
+          <div className="w-32 h-[2px] bg-gradient-to-r from-transparent via-red-500/60 to-transparent mx-auto" />
         </motion.div>
 
         {/* Two Option Cards */}

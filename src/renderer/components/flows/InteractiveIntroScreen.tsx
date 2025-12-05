@@ -82,52 +82,82 @@ export const InteractiveIntroScreen: React.FC = () => {
       }} />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-xl mx-auto px-6 text-center">
-        {/* Header */}
+      <div className="relative z-10 w-full max-w-2xl mx-auto px-8 text-center">
+        {/* Header with Dark Horse font */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
+          transition={{ duration: 0.6 }}
+          className="mb-10"
         >
-          <h1 className="text-3xl font-tech font-light text-red-400 tracking-[0.4em] uppercase mb-4">
-            INTERACTIVE MODE
+          <h1 
+            className="text-5xl md:text-6xl text-red-500 mb-6 drop-shadow-[0_0_30px_rgba(239,68,68,0.5)]"
+            style={{ fontFamily: "'Dark Horse', serif" }}
+          >
+            Interactive Mode
           </h1>
-          <div className="w-32 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
+          <div className="w-48 h-[2px] bg-gradient-to-r from-transparent via-red-500 to-transparent mx-auto" />
+        </motion.div>
+
+        {/* Feature Cards */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="grid grid-cols-3 gap-4 mb-12"
+        >
+          <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
+            <div className="text-2xl mb-2">📁</div>
+            <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Scan</p>
+            <p className="text-gray-500 text-[11px]">Real files from your system</p>
+          </div>
+          <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
+            <div className="text-2xl mb-2">⚔️</div>
+            <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Battle</p>
+            <p className="text-gray-500 text-[11px]">Symbolic confrontations</p>
+          </div>
+          <div className="bg-black/40 border border-red-500/20 rounded-lg p-4">
+            <div className="text-2xl mb-2">🛡️</div>
+            <p className="text-red-400 font-tech text-xs uppercase tracking-wider mb-1">Safe</p>
+            <p className="text-gray-500 text-[11px]">Files moved, never deleted</p>
+          </div>
         </motion.div>
 
         {/* Description */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          className="mb-16"
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="mb-10"
         >
-          <p className="text-gray-300 font-tech text-sm leading-relaxed mb-6">
+          <p className="text-gray-300 text-base leading-relaxed mb-3">
             Guided cleansing with optional confrontation.
           </p>
-          <p className="text-gray-500 font-tech text-xs leading-relaxed">
-            Scan real files. Resolve entities by category or one at a time.
-            <br />
-            Battles are symbolic and use simulated values.
+          <p className="text-gray-500 text-sm leading-relaxed">
+            Resolve entities by category or one at a time.
           </p>
         </motion.div>
 
-        {/* Action Button - only BEGIN, no back button */}
+        {/* Action Button */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
         >
           <motion.button
             onClick={handleBegin}
-            whileHover={{ backgroundColor: 'rgba(239,68,68,0.2)', borderColor: 'rgba(248,113,113,0.7)' }}
+            whileHover={{ 
+              backgroundColor: 'rgba(239,68,68,0.25)', 
+              borderColor: 'rgba(248,113,113,0.8)',
+              boxShadow: '0 0 30px rgba(239,68,68,0.3)'
+            }}
             whileTap={{ scale: 0.98 }}
-            className="w-full max-w-xs mx-auto py-4 border border-red-500/50 bg-red-500/10 
-                       text-red-300 font-tech text-sm tracking-[0.3em] uppercase
-                       transition-all duration-300 rounded"
+            className="px-12 py-4 border-2 border-red-500/60 bg-red-500/15 
+                       text-red-300 text-lg tracking-[0.4em] uppercase
+                       transition-all duration-300 rounded-lg"
+            style={{ fontFamily: "'Dark Horse', serif" }}
           >
-            BEGIN
+            Begin Hunt
           </motion.button>
         </motion.div>
 
@@ -135,26 +165,24 @@ export const InteractiveIntroScreen: React.FC = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="mt-16 pt-8 border-t border-gray-800/30"
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="mt-12 pt-6 border-t border-gray-800/30"
         >
-          <p className="text-gray-600 font-tech text-xs leading-relaxed">
-            Files are never deleted. All actions occur locally on your device.
-            <br />
-            Battle events use simulated data only.
+          <p className="text-gray-600 text-xs">
+            All actions occur locally. Battle stats are simulated.
           </p>
         </motion.div>
 
-        {/* Keyboard hint - subtle */}
+        {/* Keyboard hint */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.5 }}
-          className="mt-8 flex justify-center"
+          transition={{ delay: 0.9, duration: 0.5 }}
+          className="mt-6 flex justify-center"
         >
-          <span className="flex items-center gap-1.5 text-gray-500 font-tech text-[10px] tracking-wider">
-            <span className="border border-gray-700 px-2 py-1 rounded text-xs text-gray-400">ESC</span>
-            <span className="ml-1">return</span>
+          <span className="flex items-center gap-2 text-gray-600 text-[11px]">
+            <span className="border border-gray-700 px-2 py-1 rounded text-gray-500">ESC</span>
+            <span>return to HQ</span>
           </span>
         </motion.div>
       </div>

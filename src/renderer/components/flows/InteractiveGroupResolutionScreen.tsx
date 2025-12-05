@@ -4,6 +4,9 @@ import { useAppStore, AppState } from '../../store/appStore';
 import { formatFileSize } from '../../utils/entityUtils';
 import type { SwiftPurgeScanResult, SwiftPurgeFileEntry } from '../../../shared/types';
 import bgTexture from '../../../assets/images/bg_texture.png';
+import demonImg from '../../../assets/images/demon.png';
+import zombieImg from '../../../assets/images/zombie.png';
+import ghostImg from '../../../assets/images/ghost.png';
 
 /**
  * InteractiveGroupResolutionScreen - Group-based entity resolution
@@ -207,9 +210,9 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
 
   const getGroupColor = (group: EntityGroup) => {
     switch (group) {
-      case 'demon': return { text: 'text-red-400', bg: 'bg-red-500/70', border: 'border-red-500/50' };
-      case 'zombie': return { text: 'text-green-400', bg: 'bg-green-500/70', border: 'border-green-500/50' };
-      case 'ghost': return { text: 'text-blue-400', bg: 'bg-blue-500/70', border: 'border-blue-500/50' };
+      case 'demon': return { text: 'text-red-400', bg: 'bg-red-500/70', border: 'border-red-500/50', img: demonImg };
+      case 'zombie': return { text: 'text-green-400', bg: 'bg-green-500/70', border: 'border-green-500/50', img: zombieImg };
+      case 'ghost': return { text: 'text-blue-400', bg: 'bg-blue-500/70', border: 'border-blue-500/50', img: ghostImg };
     }
   };
 
@@ -287,7 +290,7 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                 >
                   {/* Left: Icon + Label */}
                   <div className="flex items-center gap-3 min-w-[140px]">
-                    <div className={`w-4 h-4 ${colors.bg} rounded-sm flex-shrink-0`} />
+                    <img src={colors.img} alt={group} className="w-8 h-8 object-contain flex-shrink-0" />
                     <span className={`${colors.text} font-tech text-sm tracking-[0.15em] uppercase`}>
                       {getGroupLabel(group)}
                     </span>
@@ -392,7 +395,7 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                   return (
                     <div key={group} className="flex items-center justify-between py-2 border-b border-gray-800/50 last:border-0">
                       <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 ${colors.bg} rounded-sm`} />
+                        <img src={colors.img} alt={group} className="w-6 h-6 object-contain" />
                         <span className={`${colors.text} font-tech text-sm`}>{getGroupLabel(group)}</span>
                         <span className="text-gray-600 font-tech text-xs">({files.length} files)</span>
                       </div>
