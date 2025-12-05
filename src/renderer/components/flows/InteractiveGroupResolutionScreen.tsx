@@ -251,28 +251,28 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
   }
 
   return (
-    <div className="h-screen w-screen overflow-hidden flex flex-col bg-black relative">
+    <div className="h-screen w-screen overflow-y-auto md:overflow-hidden flex flex-col bg-black relative">
       <BackgroundEffects />
 
-      <div className="relative z-10 flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-6 py-4">
+      <div className="relative z-10 flex flex-col items-center md:justify-center min-h-full max-w-4xl mx-auto w-full px-4 md:px-6 py-4">
         {/* Header - compact */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center mb-3"
+          className="text-center mb-3 pt-8 md:pt-0"
         >
-          <h1 className="text-xl font-tech font-light text-red-400 tracking-[0.3em] uppercase mb-1">
+          <h1 className="text-lg md:text-xl font-tech font-light text-red-400 tracking-[0.2em] md:tracking-[0.3em] uppercase mb-1">
             GROUP RESOLUTION
           </h1>
           <div className="w-12 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>
 
-        {/* Monster cards as main characters - 3 columns, auto height */}
+        {/* Monster cards - 1 column on mobile, 3 columns on desktop */}
         {!allResolved && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid grid-cols-3 gap-3 w-full"
+            className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full"
           >
             {(['demon', 'zombie', 'ghost'] as EntityGroup[]).map((group) => {
               const colors = getGroupColor(group);
@@ -289,12 +289,12 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                   className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-3
                               ${isResolved ? 'opacity-50' : ''} ${isEmpty ? 'opacity-30' : ''}`}
                 >
-                  {/* Monster Image - compact */}
-                  <div className="relative w-full h-32 flex items-center justify-center">
+                  {/* Monster Image - responsive */}
+                  <div className="relative w-full h-24 md:h-32 flex items-center justify-center">
                     <motion.img 
                       src={colors.img} 
                       alt={group} 
-                      className="max-h-28 w-auto object-contain"
+                      className="max-h-20 md:max-h-28 w-auto object-contain"
                       animate={!isResolved && !isEmpty ? { y: [0, -6, 0] } : {}}
                       transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                       style={{
@@ -304,23 +304,23 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                   </div>
 
                   {/* Label */}
-                  <h3 className={`${colors.text} font-tech text-base tracking-[0.2em] uppercase mt-2 mb-2`}>
+                  <h3 className={`${colors.text} font-tech text-sm md:text-base tracking-[0.15em] md:tracking-[0.2em] uppercase mt-2 mb-2`}>
                     {getGroupLabel(group)}
                   </h3>
 
-                  {/* Stats */}
+                  {/* Stats - horizontal on mobile */}
                   <div className="flex items-center gap-4 mb-2">
                     <div className="text-center">
-                      <p className="text-gray-300 font-tech text-2xl">{files.length}</p>
+                      <p className="text-gray-300 font-tech text-xl md:text-2xl">{files.length}</p>
                       <p className="text-gray-600 font-tech text-[10px]">files</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-400 font-tech text-base">{formatFileSize(groupSize)}</p>
+                      <p className="text-gray-400 font-tech text-sm md:text-base">{formatFileSize(groupSize)}</p>
                       <p className="text-gray-600 font-tech text-[10px]">size</p>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 font-tech text-[10px] mb-2 text-center">{getGroupDescription(group)}</p>
+                  <p className="text-gray-600 font-tech text-[10px] mb-2 text-center hidden md:block">{getGroupDescription(group)}</p>
 
                   {/* Actions */}
                   <div className="w-full">
@@ -392,14 +392,14 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex-1"
+            className="w-full"
           >
-            <div className="border border-gray-800 bg-black/60 backdrop-blur-sm p-6 mb-6 rounded-lg">
-              <h3 className="text-gray-400 font-tech text-sm tracking-[0.2em] uppercase mb-6 text-center">
+            <div className="border border-gray-800 bg-black/60 backdrop-blur-sm p-4 md:p-6 mb-4 md:mb-6 rounded-lg">
+              <h3 className="text-gray-400 font-tech text-xs md:text-sm tracking-[0.15em] md:tracking-[0.2em] uppercase mb-4 md:mb-6 text-center">
                 RESOLUTION SUMMARY
               </h3>
               
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {activeGroups.map(group => {
                   const state = groupStates[group];
                   const colors = getGroupColor(group);
@@ -408,17 +408,17 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                     (state.choice === 'battle' && state.battleResult === 'win');
                   
                   return (
-                    <div key={group} className="flex items-center justify-between py-2 border-b border-gray-800/50 last:border-0">
-                      <div className="flex items-center gap-3">
-                        <img src={colors.img} alt={group} className="w-6 h-6 object-contain" />
-                        <span className={`${colors.text} font-tech text-sm`}>{getGroupLabel(group)}</span>
-                        <span className="text-gray-600 font-tech text-xs">({files.length} files)</span>
+                    <div key={group} className="flex flex-col md:flex-row md:items-center justify-between py-2 border-b border-gray-800/50 last:border-0 gap-1 md:gap-0">
+                      <div className="flex items-center gap-2 md:gap-3">
+                        <img src={colors.img} alt={group} className="w-5 h-5 md:w-6 md:h-6 object-contain" />
+                        <span className={`${colors.text} font-tech text-xs md:text-sm`}>{getGroupLabel(group)}</span>
+                        <span className="text-gray-600 font-tech text-[10px] md:text-xs">({files.length})</span>
                       </div>
-                      <span className={`font-tech text-xs tracking-wider ${willPurge ? 'text-red-400' : 'text-gray-600'}`}>
+                      <span className={`font-tech text-[10px] md:text-xs tracking-wider ${willPurge ? 'text-red-400' : 'text-gray-600'} ml-7 md:ml-0`}>
                         {state.choice === 'purge' && 'PURGE'}
                         {state.choice === 'ignore' && 'IGNORED'}
-                        {state.choice === 'battle' && state.battleResult === 'win' && 'PURGE (BATTLE WON)'}
-                        {state.choice === 'battle' && state.battleResult === 'loss' && 'IGNORED (BATTLE LOST)'}
+                        {state.choice === 'battle' && state.battleResult === 'win' && 'PURGE (WON)'}
+                        {state.choice === 'battle' && state.battleResult === 'loss' && 'IGNORED (LOST)'}
                       </span>
                     </div>
                   );
@@ -430,8 +430,8 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
               onClick={handleExecute}
               whileHover={{ backgroundColor: 'rgba(239,68,68,0.15)' }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 border border-red-500/50 bg-red-500/10 
-                         text-red-300 font-tech text-sm tracking-[0.3em] uppercase
+              className="w-full py-3 md:py-4 border border-red-500/50 bg-red-500/10 
+                         text-red-300 font-tech text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase
                          hover:border-red-400 transition-all rounded"
             >
               EXECUTE CLEANSE
@@ -439,9 +439,9 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Keyboard hint - compact */}
-        <div className="pt-3 flex justify-center">
-          <span className="flex items-center gap-1.5 text-gray-500 font-tech text-[10px] tracking-wider">
+        {/* Keyboard hint - hidden on mobile */}
+        <div className="pt-3 pb-4 md:pb-0 flex justify-center">
+          <span className="hidden md:flex items-center gap-1.5 text-gray-500 font-tech text-[10px] tracking-wider">
             <span className="border border-gray-700 px-2 py-0.5 rounded text-[10px] text-gray-400">ESC</span>
             <span>cancel</span>
           </span>
