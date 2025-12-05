@@ -1,0 +1,32 @@
+{
+  "name": "spirit-guide-mcp",
+  "version": "1.0.0",
+  "description": "Spirit Guide MCP Server for The Digital Exorcist - provides chat-based statistics and insights about scanned files",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "spirit-guide-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "digital-exorcist",
+    "file-management"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "fast-check": "^3.15.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}

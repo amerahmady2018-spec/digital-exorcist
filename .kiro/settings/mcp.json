@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "spirit-guide": {
+      "command": "node",
+      "args": ["spirit-guide-mcp/dist/index.js"],
+      "env": {},
+      "disabled": false,
+      "autoApprove": ["get_exorcist_stats"]
+    }
+  }
+}

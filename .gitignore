@@ -1,0 +1,66 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+dist-electron
+dist-web
+dist-ssr
+build
+out
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment variables (may contain API keys)
+.env
+.env.local
+.env.*.local
+
+# Graveyard - contains user's deleted files (PERSONAL DATA)
+graveyard_trash/
+graveyard_trash/**
+
+# Application data - contains user logs and whitelist (PERSONAL DATA)
+.digital-exorcist/
+.digital-exorcist/**
+
+# Test artifacts - temporary test folders
+.test-*
+test-file-operations/
+test-graveyard-log/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Electron build artifacts
+release/
+*.exe
+*.dmg
+*.AppImage
+*.snap
+*.deb
+*.rpm
+
+# Vercel
+.vercel

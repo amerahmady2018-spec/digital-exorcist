@@ -1,0 +1,176 @@
+# Implementation Plan
+
+- [ ] 1. Extend state management for new flows
+  - [ ] 1.1 Add new AppState enum values for all 10 new screens (EXORCISM_STYLE, GUIDED_PREVIEW, GUIDED_ACTIVE, GUIDED_SUMMARY, SWIFT_LOCATION, SWIFT_RESULTS, SWIFT_SUMMARY, CONFRONTATION_PREVIEW, CONFRONTATION_LOOP, CONFRONTATION_SUMMARY)
+    - Update `src/renderer/store/appStore.ts` with new states
+    - Add FlowContext interface for tracking encounter state
+    - _Requirements: 12.4_
+  - [ ] 1.2 Add state transitions for all new navigation paths
+    - Define allowedTransitions for INTRO → EXORCISM_STYLE
+    - Define transitions for each flow: preview → active → summary
+    - Define transitions back to EXORCISM_STYLE from all summary screens
+    - _Requirements: 12.1, 12.3_
+  - [ ] 1.3 Write property test for state management consistency
+    - **Property 10: State Management Consistency**
+    - **Validates: Requirements 12.2, 12.3, 12.4**
+
+- [ ] 2. Create ExorcismStyleScreen (HQ) component
+  - [ ] 2.1 Create ExorcismStyleScreen component with three style cards
+    - Create `src/renderer/components/ExorcismStyleScreen.tsx`
+    - Implement StyleCard sub-component with hover/selected states
+    - Use existing cyber-horror styling (CRT, fog, green/purple palette)
+    - _Requirements: 1.2, 1.3, 1.5, 11.1, 11.2, 11.3, 11.4, 11.5_
+  - [ ] 2.2 Wire ExorcismStyleScreen to App.tsx state router
+    - Update App.tsx to render ExorcismStyleScreen for EXORCISM_STYLE state
+    - Connect TitleScreen "BEGIN EXORCISM" to transition to EXORCISM_STYLE
+    - _Requirements: 1.1, 1.4_
+  - [ ] 2.3 Write property test for style selection navigation
+    - **Property 1: Style Selection Navigation**
+    - **Validates: Requirements 1.4, 2.1, 5.1, 8.1**
+
+- [ ] 3. Create shared flow components
+  - [ ] 3.1 Create SafetyInfoPanel component
+    - Create `src/renderer/components/flows/SafetyInfoPanel.tsx`
+    - Display safe purge explanation and undo functionality info
+    - Style as modal/panel with cyber-horror theme
+    - _Requirements: 2.5, 8.4_
+  - [ ] 3.2 Create EntityCard component for flow screens
+    - Create `src/renderer/components/flows/EntityCard.tsx`
+    - Support grid and central variants
+    - Implement inspect/reveal functionality
+    - Show entity type icon, flavor text, and actions
+    - _Requirements: 3.2, 9.2_
+  - [ ] 3.3 Write property test for entity card content completeness
+    - **Property 7: Entity Card Content Completeness**
+    - **Validates: Requirements 3.2, 3.3, 9.2, 9.3**
+
+- [ ] 4. Create utility functions for entity operations
+  - [ ] 4.1 Create entity counting and space calculation utilities
+    - Create `src/renderer/utils/entityUtils.ts`
+    - Implement countEntities function
+    - Implement calculateSpaceRecovered function
+    - Implement formatFileSize helper
+    - _Requirements: 2.3, 4.3, 6.3, 8.2, 10.3_
+  - [ ] 4.2 Write property test for entity count accuracy
+    - **Property 2: Entity Count Accuracy**
+    - **Validates: Requirements 2.3, 8.2**
+  - [ ] 4.3 Write property test for space recovery calculation
+    - **Property 6: Space Recovery Calculation**
+    - **Validates: Requirements 4.3, 6.3, 10.3**
+
+- [ ] 5. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 6. Implement Guided Ritual flow
+  - [ ] 6.1 Create GuidedPreviewScreen component
+    - Create `src/renderer/components/flows/GuidedPreviewScreen.tsx`
+    - Display "Infested Zone" card with narrative lore text
+    - Show entity counts (ghosts, zombies, demons, unknown risk)
+    - Add "ENTER INFESTED ZONE" and "VIEW SAFETY INFO" buttons
+    - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5_
+  - [ ] 6.2 Create GuidedActiveScreen component
+    - Create `src/renderer/components/flows/GuidedActiveScreen.tsx`
+    - Display entities as cards in grid layout
+    - Implement inspect, purge, and spare actions per entity
+    - Show "Safe Purge / Undo available" indicator
+    - Add "EXIT ENCOUNTER" button
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7_
+  - [ ] 6.3 Create GuidedSummaryScreen component
+    - Create `src/renderer/components/flows/GuidedSummaryScreen.tsx`
+    - Display purged/spared counts by entity type
+    - Show space recovered
+    - Add "RETURN TO HQ" and "OPEN GRAVEYARD" buttons
+    - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
+  - [ ] 6.4 Wire Guided Ritual flow to App.tsx
+    - Add state routing for GUIDED_PREVIEW, GUIDED_ACTIVE, GUIDED_SUMMARY
+    - Connect purge/spare handlers to existing file operations
+    - _Requirements: 2.1, 2.4, 3.4, 3.5, 4.4_
+  - [ ] 6.5 Write property test for purge operation integrity
+    - **Property 3: Purge Operation Integrity**
+    - **Validates: Requirements 3.4, 6.4, 9.4**
+  - [ ] 6.6 Write property test for spare operation preservation
+    - **Property 4: Spare Operation Preservation**
+    - **Validates: Requirements 3.5, 6.5, 9.5**
+
+- [ ] 7. Implement Swift Purge flow
+  - [ ] 7.1 Create SwiftLocationScreen component
+    - Create `src/renderer/components/flows/SwiftLocationScreen.tsx`
+    - Display predefined quick target buttons (Downloads, Desktop, Temp/Cache)
+    - Add "Custom Folder" option with folder picker
+    - Style with minimal, tool-like cyber-horror theme
+    - _Requirements: 5.1, 5.2, 5.3, 5.4_
+  - [ ] 7.2 Create SwiftResultsScreen component
+    - Create `src/renderer/components/flows/SwiftResultsScreen.tsx`
+    - Display entity counts grouped by type
+    - Add bulk selection toggles for each category
+    - Show space recovery estimate
+    - Add "EXECUTE SWIFT PURGE", "ADJUST SELECTION", and "CANCEL" buttons
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+  - [ ] 7.3 Create SwiftSummaryScreen component
+    - Create `src/renderer/components/flows/SwiftSummaryScreen.tsx`
+    - Display space recovered and files moved count
+    - Add "RETURN TO HQ" and "VIEW GRAVEYARD" buttons
+    - _Requirements: 7.1, 7.2, 7.3, 7.4_
+  - [ ] 7.4 Wire Swift Purge flow to App.tsx
+    - Add state routing for SWIFT_LOCATION, SWIFT_RESULTS, SWIFT_SUMMARY
+    - Connect to file scanning and bulk purge operations
+    - _Requirements: 5.4, 6.4, 7.3_
+
+- [ ] 8. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 9. Implement Confrontation flow
+  - [ ] 9.1 Create ConfrontationPreviewScreen component
+    - Create `src/renderer/components/flows/ConfrontationPreviewScreen.tsx`
+    - Display intense narrative tone preview
+    - Show entity counts
+    - Add "BEGIN CONFRONTATION" and "VIEW SAFETY INFO" buttons
+    - _Requirements: 8.1, 8.2, 8.3, 8.4_
+  - [ ] 9.2 Create ConfrontationLoopScreen component
+    - Create `src/renderer/components/flows/ConfrontationLoopScreen.tsx`
+    - Display one entity at a time in central card
+    - Implement "Reveal bound file" action
+    - Add "PURGE THIS ENTITY" and "SPARE THIS ENTITY" buttons
+    - Show sidebar HUD with remaining counts and potential space recovery
+    - Add "EXIT CONFRONTATION" button
+    - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7_
+  - [ ] 9.3 Create ConfrontationSummaryScreen component
+    - Create `src/renderer/components/flows/ConfrontationSummaryScreen.tsx`
+    - Display dramatic summary with purged/spared counts
+    - Show space recovered
+    - Add "RETURN TO HQ" and "VIEW GRAVEYARD" buttons
+    - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5_
+  - [ ] 9.4 Wire Confrontation flow to App.tsx
+    - Add state routing for CONFRONTATION_PREVIEW, CONFRONTATION_LOOP, CONFRONTATION_SUMMARY
+    - Implement entity progression logic
+    - _Requirements: 8.3, 9.4, 9.5, 10.4_
+  - [ ] 9.5 Write property test for single entity display
+    - **Property 8: Confrontation Single Entity Display**
+    - **Validates: Requirements 9.1, 9.6**
+  - [ ] 9.6 Write property test for entity progression
+    - **Property 9: Entity Progression**
+    - **Validates: Requirements 9.4, 9.5**
+
+- [ ] 10. Implement summary count consistency
+  - [ ] 10.1 Add summary count tracking to flow context
+    - Update FlowContext to track purged and spared entities by type
+    - Ensure counts are updated on each purge/spare action
+    - _Requirements: 4.2, 7.2, 10.2_
+  - [ ] 10.2 Write property test for summary count consistency
+    - **Property 5: Summary Count Consistency**
+    - **Validates: Requirements 4.2, 7.2, 10.2**
+
+- [ ] 11. Implement keyboard navigation
+  - [ ] 11.1 Add ESC key handling for all flow screens
+    - Update useKeyboardControls hook with new state contexts
+    - ESC on preview screens returns to EXORCISM_STYLE
+    - ESC on active/loop screens returns to preview or shows confirmation
+    - ESC on summary screens returns to EXORCISM_STYLE
+    - _Requirements: 12.2_
+  - [ ] 11.2 Add ENTER key handling for primary actions
+    - ENTER on style cards confirms selection
+    - ENTER on preview screens enters the flow
+    - _Requirements: 1.1_
+
+- [ ] 12. Final Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.

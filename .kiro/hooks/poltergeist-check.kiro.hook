@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Poltergeist Check",
+  "description": "Automatically runs npm test whenever a file in src/ is saved to ensure no ghost/monster logic is broken. If tests fail, the agent will summarize which logic is broken.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm test"
+  }
+}

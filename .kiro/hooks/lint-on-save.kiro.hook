@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Lint on Save",
+  "description": "Automatically runs ESLint on saved code files to maintain code quality. Displays linting errors in the problems panel using the project's ESLint configuration.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "spirit-guide-mcp/src/**/*.ts"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npx eslint --ext .ts,.tsx ${file}"
+  }
+}
