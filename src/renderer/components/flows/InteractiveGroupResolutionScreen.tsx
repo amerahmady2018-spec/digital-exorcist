@@ -254,28 +254,28 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
     <div className="h-screen w-screen overflow-hidden flex flex-col bg-black relative">
       <BackgroundEffects />
 
-      <div className="relative z-10 flex-1 flex flex-col max-w-5xl mx-auto w-full px-6 pt-6 pb-4">
+      <div className="relative z-10 flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-6 py-4">
         {/* Header - compact */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-center mb-4"
+          className="text-center mb-3"
         >
           <h1 
-            className="text-3xl text-red-500 mb-2 drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+            className="text-2xl text-red-500 mb-1 drop-shadow-[0_0_20px_rgba(239,68,68,0.4)]"
             style={{ fontFamily: "'Dark Horse', serif" }}
           >
             Group Resolution
           </h1>
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
+          <div className="w-12 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>
 
-        {/* Monster cards as main characters - 3 columns, fill available space */}
+        {/* Monster cards as main characters - 3 columns, auto height */}
         {!allResolved && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex-1 grid grid-cols-3 gap-4 min-h-0"
+            className="grid grid-cols-3 gap-3 w-full"
           >
             {(['demon', 'zombie', 'ghost'] as EntityGroup[]).map((group) => {
               const colors = getGroupColor(group);
@@ -289,46 +289,46 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                 <motion.div 
                   key={group}
                   whileHover={!isResolved && !isEmpty ? { scale: 1.02 } : {}}
-                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-5 h-full
+                  className={`border ${colors.border} bg-black/60 backdrop-blur-sm rounded-lg flex flex-col items-center p-3
                               ${isResolved ? 'opacity-50' : ''} ${isEmpty ? 'opacity-30' : ''}`}
                 >
-                  {/* Monster Image - Large, fills available space */}
-                  <div className="relative w-full flex-1 flex items-center justify-center min-h-[180px]">
+                  {/* Monster Image - compact */}
+                  <div className="relative w-full h-32 flex items-center justify-center">
                     <motion.img 
                       src={colors.img} 
                       alt={group} 
-                      className="max-h-[200px] w-auto object-contain"
-                      animate={!isResolved && !isEmpty ? { y: [0, -10, 0] } : {}}
+                      className="max-h-28 w-auto object-contain"
+                      animate={!isResolved && !isEmpty ? { y: [0, -6, 0] } : {}}
                       transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
                       style={{
-                        filter: `drop-shadow(0 0 30px ${group === 'demon' ? 'rgba(239,68,68,0.6)' : group === 'zombie' ? 'rgba(34,197,94,0.6)' : 'rgba(59,130,246,0.6)'})`
+                        filter: `drop-shadow(0 0 20px ${group === 'demon' ? 'rgba(239,68,68,0.5)' : group === 'zombie' ? 'rgba(34,197,94,0.5)' : 'rgba(59,130,246,0.5)'})`
                       }}
                     />
                   </div>
 
                   {/* Label */}
-                  <h3 className={`${colors.text} font-tech text-xl tracking-[0.25em] uppercase mt-4 mb-3`}>
+                  <h3 className={`${colors.text} font-tech text-base tracking-[0.2em] uppercase mt-2 mb-2`}>
                     {getGroupLabel(group)}
                   </h3>
 
                   {/* Stats */}
-                  <div className="flex items-center gap-6 mb-3">
+                  <div className="flex items-center gap-4 mb-2">
                     <div className="text-center">
-                      <p className="text-gray-300 font-tech text-3xl">{files.length}</p>
-                      <p className="text-gray-600 font-tech text-xs">files</p>
+                      <p className="text-gray-300 font-tech text-2xl">{files.length}</p>
+                      <p className="text-gray-600 font-tech text-[10px]">files</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-gray-400 font-tech text-xl">{formatFileSize(groupSize)}</p>
-                      <p className="text-gray-600 font-tech text-xs">size</p>
+                      <p className="text-gray-400 font-tech text-base">{formatFileSize(groupSize)}</p>
+                      <p className="text-gray-600 font-tech text-[10px]">size</p>
                     </div>
                   </div>
 
-                  <p className="text-gray-600 font-tech text-xs mb-4 text-center">{getGroupDescription(group)}</p>
+                  <p className="text-gray-600 font-tech text-[10px] mb-2 text-center">{getGroupDescription(group)}</p>
 
                   {/* Actions */}
                   <div className="w-full">
                     {isResolved ? (
-                      <div className={`text-center py-2 font-tech text-sm tracking-wider ${
+                      <div className={`text-center py-1 font-tech text-xs tracking-wider ${
                         state.choice === 'purge' || (state.choice === 'battle' && state.battleResult === 'win') 
                           ? 'text-red-400' : 'text-gray-500'
                       }`}>
@@ -338,31 +338,31 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                         {state.choice === 'battle' && state.battleResult === 'loss' && 'BATTLE LOST'}
                       </div>
                     ) : isEmpty ? (
-                      <div className="text-center py-2 text-gray-600 font-tech text-xs">
+                      <div className="text-center py-1 text-gray-600 font-tech text-[10px]">
                         No files detected
                       </div>
                     ) : (
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-1.5">
                         <motion.button
                           onClick={() => {
                             setGroupStates(prev => ({ ...prev, [group]: { choice: 'purge' } }));
                           }}
                           whileHover={{ backgroundColor: 'rgba(239,68,68,0.2)' }}
                           whileTap={{ scale: 0.98 }}
-                          className="w-full py-2 border border-red-500/40 text-red-400 font-tech text-xs tracking-[0.15em] uppercase
+                          className="w-full py-1.5 border border-red-500/40 text-red-400 font-tech text-[10px] tracking-[0.15em] uppercase
                                      hover:border-red-400 transition-all rounded"
                         >
                           PURGE ALL
                         </motion.button>
 
-                        <div className="flex gap-2">
+                        <div className="flex gap-1.5">
                           <motion.button
                             onClick={() => {
                               setGroupStates(prev => ({ ...prev, [group]: { choice: 'ignore' } }));
                             }}
                             whileHover={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
                             whileTap={{ scale: 0.98 }}
-                            className="flex-1 py-2 border border-gray-700 text-gray-500 font-tech text-[10px] tracking-[0.1em] uppercase
+                            className="flex-1 py-1.5 border border-gray-700 text-gray-500 font-tech text-[9px] tracking-[0.1em] uppercase
                                        hover:border-gray-600 transition-all rounded"
                           >
                             IGNORE
@@ -375,7 +375,7 @@ export const InteractiveGroupResolutionScreen: React.FC = () => {
                             }}
                             whileHover={{ backgroundColor: 'rgba(147,51,234,0.2)' }}
                             whileTap={{ scale: 0.98 }}
-                            className="flex-1 py-2 border border-purple-500/40 text-purple-400 font-tech text-[10px] tracking-[0.1em] uppercase
+                            className="flex-1 py-1.5 border border-purple-500/40 text-purple-400 font-tech text-[9px] tracking-[0.1em] uppercase
                                        hover:border-purple-400 transition-all rounded"
                           >
                             BATTLE
