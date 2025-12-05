@@ -134,11 +134,8 @@ export const InteractiveSummaryScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-10"
         >
-          <h1 
-            className="text-4xl text-red-500 mb-4 drop-shadow-[0_0_25px_rgba(239,68,68,0.4)]"
-            style={{ fontFamily: "'Dark Horse', serif" }}
-          >
-            {battleLost ? 'Battle Resolved' : 'Session Complete'}
+          <h1 className="text-2xl font-tech font-light text-red-400 tracking-[0.3em] uppercase mb-3">
+            {battleLost ? 'BATTLE RESOLVED' : 'SESSION COMPLETE'}
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto" />
         </motion.div>

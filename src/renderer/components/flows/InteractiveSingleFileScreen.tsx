@@ -123,11 +123,8 @@ export const InteractiveSingleFileScreen: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 
-            className="text-4xl text-red-500 mb-4 drop-shadow-[0_0_25px_rgba(239,68,68,0.4)]"
-            style={{ fontFamily: "'Dark Horse', serif" }}
-          >
-            Single-File Purge
+          <h1 className="text-2xl font-tech font-light text-red-400 tracking-[0.3em] uppercase mb-3">
+            SINGLE-FILE PURGE
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent mx-auto mb-4" />
           <p className="text-gray-500 font-tech text-xs">
